@@ -57,6 +57,8 @@ alias addupdated='git add -u'
 alias commit='git commit -m'
 alias status='git status'
 alias stash='git stash'
+alias push='git push'
+alias pull='git pull'
 alias "clone"='git clone'
 alias config-zshrc='nvim ~/.zshrc'
 
