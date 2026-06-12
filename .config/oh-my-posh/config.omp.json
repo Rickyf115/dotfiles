@@ -1,0 +1,63 @@
+{
+  "$schema": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
+  "blocks": [
+    {
+      "alignment": "left",
+      "segments": [
+        {
+          "foreground": "#f9e2af",
+          "options": {
+            "style": "folder"
+          },
+          "style": "diamond",
+          "template": "<#a6e3a1> </><b>{{ .Path }}</b>",
+          "type": "path"
+        },
+        {
+          "foreground": "#89b4fa",
+          "options": {
+            "branch_icon": "",
+            "fetch_status": true,
+            "fetch_upstream_icon": true
+          },
+          "style": "diamond",
+          "template": "<#cba6f7>  </><b>{{ .HEAD }}</b>{{ if gt .Ahead 0 }} <#94e2d5>↑{{ .Ahead }}</>{{ end }}{{ if gt .Behind 0 }} <#f38ba8>↓{{ .Behind }}</>{{ end }}{{ if .Staging.Changed }} <#a6e3a1> +{{ .Staging.String }}</>{{ end }}{{ if .Working.Changed }} <#fab387> ~{{ .Working.String }}</>{{ end }}",
+          "type": "git"
+        },
+        {
+          "foreground": "#f38ba8",
+          "style": "diamond",
+          "template": "<#f38ba8> ◉</>",
+          "type": "text"
+        }
+      ],
+      "type": "prompt"
+    },
+    {
+      "segments": [
+        {
+          "foreground": "#94e2d5",
+          "style": "diamond",
+          "template": "<#89dceb>⎈ </><b>{{ .Context }}</b>{{ if .Namespace }}/<#cba6f7>{{ .Namespace }}</>{{ end }}",
+          "type": "kubectl"
+        }
+      ],
+      "type": "rprompt"
+    },
+    {
+      "alignment": "left",
+      "newline": true,
+      "segments": [
+        {
+          "foreground": "#cdd6f4",
+          "style": "plain",
+          "template": ">",
+          "type": "text"
+        }
+      ],
+      "type": "prompt"
+    }
+  ],
+  "final_space": true,
+  "version": 4
+}

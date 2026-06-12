@@ -75,4 +75,4 @@ export EDITOR=nvim
 # path things
 export PATH=$PATH:/home/oomkilled/.local/bin
 
-eval "$(oh-my-posh init zsh --config 'https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/refs/heads/main/themes/catppuccin_mocha.omp.json')"
+eval "$(oh-my-posh init zsh --config "$HOME/.config/oh-my-posh/config.omp.json")"
