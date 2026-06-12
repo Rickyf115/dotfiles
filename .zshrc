@@ -15,6 +15,7 @@ zinit snippet OMZP::git
 zinit snippet OMZP::command-not-found
 zinit snippet OMZP::sudo
 zinit snippet OMZP::kubectl
+zinit snippet OMZP::kubectx
 zinit snippet OMZP::gcloud
 zinit snippet OMZP::aws
 
@@ -61,6 +62,7 @@ alias push='git push'
 alias pull='git pull'
 alias "clone"='git clone'
 alias config-zshrc='nvim ~/.zshrc'
+alias kc='kubectl'
 
 # shell integrations
 eval "$(fzf --zsh)"
