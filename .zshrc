@@ -4,28 +4,32 @@ ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 [ ! -d $ZINIT_HOME/.git ] && git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
 source "${ZINIT_HOME}/zinit.zsh"
 
-# Plugins
-zinit light zsh-users/zsh-syntax-highlighting
-zinit light zsh-users/zsh-completions
-zinit light zsh-users/zsh-autosuggestions
-zinit light Aloxaf/fzf-tab
+# load completions on startup, but only rebuild the dump once a day
+zicompinit_cached() {
+  autoload -Uz compinit
+  local -a fresh=(~/.zcompdump(Nmh-24))
+  if (( ${#fresh} )); then compinit -C; else compinit; fi
+}
 
-# Snippet Plugins
-zinit snippet OMZP::git
-zinit snippet OMZP::command-not-found
-zinit snippet OMZP::sudo
-zinit snippet OMZP::kubectl
-zinit snippet OMZP::kubectx
-zinit snippet OMZP::gcloud
-zinit snippet OMZP::aws
-
-# load completions on startup
-autoload -U compinit && compinit
-
-zinit cdreplay -q
+zinit wait lucid for \
+  atinit"zicompinit_cached" \
+    OMZP::git \
+    OMZP::command-not-found \
+    OMZP::sudo \
+    OMZP::kubectl \
+    OMZP::kubectx \
+    OMZP::gcloud \
+    OMZP::aws \
+  blockf \
+    zsh-users/zsh-completions \
+  Aloxaf/fzf-tab \
+  atload"_zsh_autosuggest_start" \
+    zsh-users/zsh-autosuggestions \
+  atinit"zicdreplay" \
+    zsh-users/zsh-syntax-highlighting
 
 # keybinds
-bindkey -v
+# bindkey -v
 
 # history management
 HISTSIZE=5000
@@ -48,10 +52,10 @@ zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza --almost-all --group-directorie
 zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'eza --almost-all --group-directories-first --icons=always --long --no-permissions --no-user --no-time --no-filesize --color=always -F $realpath'
 
 # aliases
-alias cat='bat'
-alias ls='eza --almost-all --group-directories-first --icons=always --long --no-permissions --no-user --no-time --no-filesize --color=always -F'
+command -v bat &> /dev/null && alias cat='bat'
+command -v eza &> /dev/null && alias ls='eza --almost-all --group-directories-first --icons=always --long --no-permissions --no-user --no-time --no-filesize --color=always -F'
 alias c='clear'
-alias k='k9s'
+command -v k9s &> /dev/null && alias k='k9s'
 alias pull='git pull'
 alias addall='git add .'
 alias addupdated='git add -u'
@@ -61,8 +65,9 @@ alias stash='git stash'
 alias push='git push'
 alias pull='git pull'
 alias "clone"='git clone'
-alias config-zshrc='nvim ~/.zshrc'
-alias kc='kubectl'
+command -v nvim &> /dev/null && alias config-zshrc='nvim ~/.zshrc'
+command -v kubectl &> /dev/null && alias kc='kubectl'
+command -v kitty &> /dev/null && [[ "$TERM" == "xterm-kitty" ]] && alias ssh='kitty +kitten ssh'
 
 # shell integrations
 eval "$(fzf --zsh)"
