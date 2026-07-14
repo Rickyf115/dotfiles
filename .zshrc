@@ -72,7 +72,6 @@ command -v kitty &> /dev/null && [[ "$TERM" == "xterm-kitty" ]] && alias ssh='ki
 # shell integrations
 eval "$(fzf --zsh)"
 eval "$(zoxide init --cmd cd zsh)"
-eval $(thefuck --alias)
 
 # env 
 export EDITOR=nvim
